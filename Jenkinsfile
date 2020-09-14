@@ -46,7 +46,7 @@ spec:
 				}
 				container( name: 'bitnami', shell: '/bin/bash' ) {
 					sh """
-					kubectl apply -f $JENKINS_AGENT_WORKDIR/workspace/build\ automation/deploy.yaml
+					kubectl apply -f "$JENKINS_AGENT_WORKDIR/workspace/build automation/deploy.yaml"
 					"""
 				}
 			}
