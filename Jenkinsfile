@@ -18,7 +18,7 @@ spec:
       mountPath: /kaniko/.docker/
     tty: true
   - name: bitnami
-    image: bitnami/kubectl
+    image: bitnami/kubectl:latest
     command:
     - cat
     volumeMounts:
@@ -30,8 +30,8 @@ spec:
     configMap:
       name: docker-config
   - name: kube-config
-    secret:
-      secretName: kube-config
+    configMap:
+      name: kube-config
 """
 		}
 	}
@@ -43,7 +43,7 @@ spec:
 //					/kaniko/executor --dockerfile=Dockerfile --context=git://github.com/burhanuguz/dotnet-core-hello-world --destination=burhanuguz/dotnet-core-hello-world
 //					"""
 //				}
-				container( name: 'bitnami', shell: '/bin/sh' ) {
+				container( name: 'bitnami', shell: '/bin/bash' ) {
 					sh 'echo deneme'
 				}
 			}
