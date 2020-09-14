@@ -10,30 +10,30 @@ metadata:
   namespace: build
 spec:
   containers:
-  - name: kaniko
-    image: gcr.io/kaniko-project/executor:debug
-    command:
-    - cat
-    volumeMounts:
-    - name: docker-config
-      mountPath: /kaniko/.docker/
-    tty: true
-  - name: bitnami
-    image: bitnami/kubectl
-    command:
-    - cat
-    volumeMounts:
-    - name: kube-config
-      mountPath: /.kube/
-    tty: true
+    - name: kaniko
+      image: gcr.io/kaniko-project/executor:debug
+      command:
+      - cat
+      volumeMounts:
+      - name: docker-config
+        mountPath: /kaniko/.docker/
+      tty: true
+    - name: bitnami
+      image: bitnami/kubectl
+      command:
+      - cat
+      volumeMounts:
+      - name: kube-config
+        mountPath: /.kube/
+      tty: true
   restartPolicy: Never
   volumes:
-  - name: docker-config
-    configMap:
-      name: docker-config
-  - name: kube-config
-    secret:
-      secretName: kube-config
+    - name: docker-config
+      configMap:
+        name: docker-config
+    - name: kube-config
+      secret:
+        secretName: kube-config
 """
 		}
 	}
