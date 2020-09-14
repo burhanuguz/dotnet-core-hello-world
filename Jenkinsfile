@@ -43,7 +43,7 @@ spec:
 //					/kaniko/executor --dockerfile=Dockerfile --context=git://github.com/burhanuguz/dotnet-core-hello-world --destination=burhanuguz/dotnet-core-hello-world
 //					"""
 //				}
-				container( name: 'bitnami', shell: '/bin/bash' ) {
+				container( name: 'kaniko', shell: '/busybox/sh' ) {
 					sh 'echo deneme'
 				}
 			}
