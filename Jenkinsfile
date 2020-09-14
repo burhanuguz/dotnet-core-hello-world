@@ -1,40 +1,40 @@
 pipeline {
-	agent {
-		kubernetes {
-			yaml """
-apiVersion: v1
-kind: Pod
-metadata:
-  name: builder-deployer
-  namespace: build
-spec:
-  containers:
-  - name: kaniko
-    image: gcr.io/kaniko-project/executor:debug
-    command:
-    - cat
-    volumeMounts:
-    - name: docker-config
-      mountPath: /kaniko/.docker/
-    tty: true
-  - name: bitnami
-    image: bitnami/kubectl
-    command:
-    - cat
-    volumeMounts:
-    - name: kube-config
-      mountPath: /.kube/
-    tty: true
-  volumes:
-  - name: docker-config
-    configMap:
-      name: docker-config
-  - name: kube-config
-    secret:
-      secretName: kube-config
-"""
-		}
-	}
+//	agent {
+//		kubernetes {
+//			yaml """
+//apiVersion: v1
+//kind: Pod
+//metadata:
+//  name: builder-deployer
+//  namespace: build
+//spec:
+//  containers:
+//  - name: kaniko
+//    image: gcr.io/kaniko-project/executor:debug
+//    command:
+//    - cat
+//    volumeMounts:
+//    - name: docker-config
+//      mountPath: /kaniko/.docker/
+//    tty: true
+//  - name: bitnami
+//    image: bitnami/kubectl
+//    command:
+//    - cat
+//    volumeMounts:
+//    - name: kube-config
+//      mountPath: /.kube/
+//    tty: true
+//  volumes:
+//  - name: docker-config
+//    configMap:
+//      name: docker-config
+//  - name: kube-config
+//    secret:
+//      secretName: kube-config
+//"""
+//		}
+//	}
 	stages {
 		stage( 'Build DotNet Core Source from Github and Deploy to the Cluster ' ) {
 			steps {
@@ -47,7 +47,7 @@ spec:
 				node('master') {
 					script {
 						sh '''
-						kubectl apply -f "$JENKINS_AGENT_WORKDIR/workspace/build automation/deploy.yaml"
+						env
 						'''
 					}
 				}
