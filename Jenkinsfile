@@ -19,8 +19,6 @@ spec:
     tty: true
   - name: bitnami
     image: bitnami/kubectl:latest
-    command:
-    - cat
     volumeMounts:
     - name: kube-config
       mountPath: /.kube/
