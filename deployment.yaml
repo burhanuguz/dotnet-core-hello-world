@@ -10,8 +10,8 @@ spec:
   replicas: 1
   template:
     metadata:
-    labels:
-      run: dotnet
+      labels:
+        run: dotnet
     spec:
       containers:
         - name: dotnet
