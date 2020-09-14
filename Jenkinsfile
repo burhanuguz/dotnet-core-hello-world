@@ -38,11 +38,11 @@ spec:
 	stages {
 		stage( 'Build DotNet Core Source from Github and Deploy to the Cluster ' ) {
 			steps {
-				container( name: 'kaniko', shell: '/busybox/sh' ) {
-					sh """
-					/kaniko/executor --dockerfile=Dockerfile --context=git://github.com/burhanuguz/dotnet-core-hello-world --destination=burhanuguz/dotnet-core-hello-world
-					"""
-				}
+//				container( name: 'kaniko', shell: '/busybox/sh' ) {
+//					sh """
+//					/kaniko/executor --dockerfile=Dockerfile --context=git://github.com/burhanuguz/dotnet-core-hello-world --destination=burhanuguz/dotnet-core-hello-world
+//					"""
+//				}
 				container( 'bitnami' ) {
 					writeFile file: "deploy.yaml", text: """
 apiVersion: apps/v1
@@ -88,6 +88,7 @@ spec:
   type: NodePort
 """
 					sh """
+					ls -la
 					kubectl apply -f deploy.yaml
 					"""
 				}
