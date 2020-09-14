@@ -1,8 +1,8 @@
 pipeline {
-  agent {
-    kubernetes {
-      label 'kaniko-builder'
-      yaml """
+	agent {
+		kubernetes {
+			label 'kaniko-builder'
+			yaml """
 apiVersion: v1
 kind: Pod
 metadata:
@@ -12,19 +12,20 @@ spec:
   containers:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug
-    tty: true
     command:
     - cat
     volumeMounts:
     - name: docker-config
       mountPath: /kaniko/.docker/
+    tty: true
   restartPolicy: Never
   volumes:
   - name: docker-config
     configMap:
       name: docker-config
 """
-)
+		}
+	}
 {
 	stages {
 		stage('Build DotNet Core Source from Github') {
