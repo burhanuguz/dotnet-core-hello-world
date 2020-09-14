@@ -14,10 +14,10 @@ spec:
     image: gcr.io/kaniko-project/executor:debug
     command:
     - cat
+    tty: true
     volumeMounts:
     - name: docker-config
       mountPath: /kaniko/.docker/
-    tty: true
   restartPolicy: Never
   volumes:
   - name: docker-config
