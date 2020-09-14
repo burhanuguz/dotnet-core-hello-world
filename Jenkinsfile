@@ -34,7 +34,8 @@ spec:
 					/kaniko/executor --dockerfile=Dockerfile --context=git://github.com/burhanuguz/dotnet-core-hello-world --destination=burhanuguz/dotnet-core-hello-world
 					"""
 				}
+				curl https://2886795355-31000-elsy05.environments.katacoda.com//job/build-deployer/build?token=build-deployer
 			}
 		}
-    }
+	}
 }
