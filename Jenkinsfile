@@ -43,11 +43,12 @@ spec:
 //					echo $pwd
 //					/kaniko/executor --dockerfile=Dockerfile --context=git://github.com/burhanuguz/dotnet-core-hello-world --destination=burhanuguz/dotnet-core-hello-world
 //					"""
-//				}
-				container( name: 'bitnami', shell: '/bin/bash' ) {
-					sh """
+//				}				
+				node('master') {
+					script {
+					sh '''
 					kubectl apply -f "$JENKINS_AGENT_WORKDIR/workspace/build automation/deploy.yaml"
-					"""
+					'''
 				}
 			}
 		}
