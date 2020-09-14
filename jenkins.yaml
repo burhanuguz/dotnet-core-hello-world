@@ -23,7 +23,7 @@ spec:
           image: jenkins/jenkins
           env:
             - name: PATH
-              value: $PATH:/var/jenkins_home
+              value: /usr/local/openjdk-8/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/jenkins_home
           ports:
             - containerPort: 8080
               protocol: TCP
