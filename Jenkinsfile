@@ -12,7 +12,7 @@ spec:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug
     command:
-    - ls -la
+    - cat
     volumeMounts:
     - name: docker-config
       mountPath: /kaniko/.docker/
@@ -20,7 +20,7 @@ spec:
   - name: bitnami
     image: bitnami/kubectl:latest
     command:
-    - cat
+    - ls -la
     volumeMounts:
     - name: kube-config
       mountPath: /.kube/
