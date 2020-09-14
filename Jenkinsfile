@@ -26,7 +26,6 @@ spec:
 """
 		}
 	}
-{
 	stages {
 		stage('Build DotNet Core Source from Github') {
 			container(name: 'kaniko', shell: '/busybox/sh') {
