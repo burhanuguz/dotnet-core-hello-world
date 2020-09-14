@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins-deployment
+  namespace: jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins
+  template:
+    metadata:
+      labels:
+        app: jenkins
+    spec:
+      volumes:
+        - name: jenkins-home
+          hostPath:
+            # directory location on host
+            path: /tmp/jenkins-private/jenkins_home
+            # this field is optional
+            type: Directory
+      containers:
+        - name: jenkins
+          image: jenkins/jenkins
+          env:
+            - name: PATH
+              value: $PATH:/var/jenkins_home
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+              name: http
+            - containerPort: 50000
+              protocol: TCP
+              name: jnlp
+          volumeMounts:
+            - name: jenkins-home
+              mountPath: /var/jenkins_home
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-service
+  namespace: jenkins
+spec:
+  selector:
+    app: jenkins
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+      nodePort: 31000
+      name: http
+    - protocol: TCP
+      port: 50000
+      targetPort: 50000
+      name: jnlp
+      nodePort: 32000
