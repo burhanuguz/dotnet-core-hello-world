@@ -17,21 +17,10 @@ spec:
     - name: docker-config
       mountPath: /kaniko/.docker/
     tty: true
-  - name: bitnami
-    image: bitnami/kubectl
-    command:
-    - cat
-    volumeMounts:
-    - name: kube-config
-      mountPath: /.kube/
-    tty: true
   volumes:
   - name: docker-config
     configMap:
       name: docker-config
-  - name: kube-config
-    secret:
-      secretName: kube-config
 """
 		}
 	}
