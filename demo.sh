@@ -15,9 +15,6 @@ kubectl create ns jenkins
 kubectl create ns build
 kubectl create ns dotnet-core
 
-# Create resource for Jenkins to connect Kubernetes Cluster
-kubectl create secret generic -n build kube-config --from-file=/root/.kube/config
-
 # Create Jenkins Instance in Kubernetes
 kubectl apply -f https://raw.githubusercontent.com/burhanuguz/dotnet-core-hello-world/master/deployments/jenkins.yaml
 
