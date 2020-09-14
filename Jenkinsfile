@@ -11,8 +11,8 @@ spec:
   containers:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug
-    args:
-    - apply -f deploy.yaml
+    command:
+    - ls -la 
     volumeMounts:
     - name: docker-config
       mountPath: /kaniko/.docker/
@@ -44,49 +44,6 @@ spec:
 //					"""
 //				}
 				container( 'bitnami' ) {
-					writeFile file: "deploy.yaml", text: """
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: dotnet-core-helloworld
-  namespace: dotnet-core
-spec:
-  selector:
-    matchLabels:
-    run: dotnet
-  replicas: 1
-  template:
-    metadata:
-    labels:
-      run: dotnet
-    spec:
-    containers:
-    - name: dotnet
-      image: burhanuguz/dotnet-core-hello-world:latest
-      ports:
-        - containerPort: 11130
-      resources:
-        limits:
-          cpu: 500m
-        requests:
-          cpu: 1m
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: dotnet-core-helloworld
-  namespace: dotnet-core
-labels:
-  run: dotnet
-spec:
-  ports:
-  - port: 80
-    targetPort: 11130
-    nodePort: 30000
-  selector:
-    run: dotnet
-  type: NodePort
-"""
 				}
 			}
 		}
