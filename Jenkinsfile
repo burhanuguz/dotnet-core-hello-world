@@ -44,9 +44,7 @@ spec:
 //					"""
 //				}
 				container( name: 'bitnami', shell: '/bin/bash' ) {
-					sh '''#!/bin/bash
-					ls -la
-					'''
+					sh 'echo deneme'
 				}
 			}
 		}
