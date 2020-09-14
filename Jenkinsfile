@@ -44,9 +44,7 @@ spec:
 //					"""
 //				}
 				container( 'bitnami' ) {
-					sh """
-					ls -la
-					"""
+					kubectl apply -f denem.yaml
 				}
 			}
 		}
