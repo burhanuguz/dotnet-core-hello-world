@@ -87,7 +87,7 @@ ports:
 selector:
 	run: dotnet
 type: NodePort
-				"""
+"""
 				container( 'kubectl-deployer' ) {
 					sh """
 					kubectl apply -f deploy.yaml
