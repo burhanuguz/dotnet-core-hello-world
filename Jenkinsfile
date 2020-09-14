@@ -20,7 +20,7 @@ spec:
   - name: bitnami
     image: bitnami/kubectl:latest
     command:
-    - ls
+    - cat
     volumeMounts:
     - name: kube-config
       mountPath: /.kube/
@@ -44,7 +44,9 @@ spec:
 //					"""
 //				}
 				container( 'bitnami' ) {
-					sh 'ls -la'
+					sh """
+					ls -la
+					"""
 				}
 			}
 		}
