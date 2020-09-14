@@ -46,9 +46,10 @@ spec:
 //				}				
 				node('master') {
 					script {
-					sh '''
-					kubectl apply -f "$JENKINS_AGENT_WORKDIR/workspace/build automation/deploy.yaml"
-					'''
+						sh '''
+						kubectl apply -f "$JENKINS_AGENT_WORKDIR/workspace/build automation/deploy.yaml"
+						'''
+					}
 				}
 			}
 		}
