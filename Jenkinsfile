@@ -10,7 +10,7 @@ pipeline {
 				container( name: 'kaniko', shell: '/busybox/sh' ) {
 					sh """
 					echo $pwd
-					/kaniko/executor --dockerfile=Dockerfile --context=git://github.com/burhanuguz/dotnet-core-hello-world --destination=burhanuguz/dotnet-core-hello-world:$BUILD_NUMBER
+					/kaniko/executor --dockerfile=src/Dockerfile --context=git://github.com/burhanuguz/dotnet-core-hello-world --destination=burhanuguz/dotnet-core-hello-world:$BUILD_NUMBER
 					"""
 				}				
 				node('master') {
