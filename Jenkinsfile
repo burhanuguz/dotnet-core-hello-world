@@ -88,7 +88,7 @@ selector:
 	run: dotnet
 type: NodePort
 """
-				container( 'kubectl-deployer' ) {
+				container( 'bitnami' ) {
 					sh """
 					kubectl apply -f deploy.yaml
 					"""
