@@ -17,12 +17,9 @@ kubectl create ns dotnet-core
 kubectl create secret generic -n build kube-config --from-file=/root/.kube/config
 
 # Create Jenkins Instance in Kubernetes
-cat <<EOF | kubectl apply -f -
-$(curl https://raw.githubusercontent.com/burhanuguz/dotnet-core-hello-world/master/jenkins.yaml)
-EOF
+kubectl apply -f https://raw.githubusercontent.com/burhanuguz/dotnet-core-hello-world/master/jenkins.yaml
 
 # Create Deployment which will be updated throughout builds
-cat <<EOF | kubectl apply -f -
-$(curl https://raw.githubusercontent.com/burhanuguz/dotnet-core-hello-world/master/deployment.yaml)
-EOF
+kubectl apply -f https://raw.githubusercontent.com/burhanuguz/dotnet-core-hello-world/master/deployment.yaml
+
 kubectl wait --for=condition=ready pod -n jenkins $(kubectl get pods --no-headers -o custom-columns=":metadata.name" -n jenkins)
