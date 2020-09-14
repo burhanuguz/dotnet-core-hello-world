@@ -27,11 +27,13 @@ spec:
 		}
 	}
 	stages {
-		stage('Build DotNet Core Source from Github') {
-			container(name: 'kaniko', shell: '/busybox/sh') {
-			    sh """
-			    /kaniko/executor --dockerfile=Dockerfile --context=git://github.com/burhanuguz/dotnet-core-hello-world --destination=burhanuguz/dotnet-core-hello-world
-			    """
+		stage( 'Build DotNet Core Source from Github' ) {
+			steps {
+				container( name: 'kaniko', shell: '/busybox/sh' ) {
+					sh """
+					/kaniko/executor --dockerfile=Dockerfile --context=git://github.com/burhanuguz/dotnet-core-hello-world --destination=burhanuguz/dotnet-core-hello-world
+					"""
+				}
 			}
 		}
     }
