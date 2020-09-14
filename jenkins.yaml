@@ -16,9 +16,7 @@ spec:
       volumes:
         - name: jenkins-home
           hostPath:
-            # directory location on host
-            path: /tmp/jenkins-private/jenkins_home
-            # this field is optional
+            path: /tmp/jenkins-custom/jenkins_home
             type: Directory
       containers:
         - name: jenkins
