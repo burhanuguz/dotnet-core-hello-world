@@ -1,27 +1,7 @@
 pipeline {
 	agent {
 		kubernetes {
-			yaml """
-apiVersion: v1
-kind: Pod
-metadata:
-  name: builder-deployer
-  namespace: build
-spec:
-  containers:
-  - name: kaniko
-    image: gcr.io/kaniko-project/executor:debug
-    command:
-    - cat
-    volumeMounts:
-    - name: docker-config
-      mountPath: /kaniko/.docker/
-    tty: true
-  volumes:
-  - name: docker-config
-    configMap:
-      name: docker-config
-"""
+			yamlFile 'kaniko.yaml'
 		}
 	}
 	stages {
