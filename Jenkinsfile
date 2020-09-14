@@ -17,31 +17,81 @@ spec:
     - name: docker-config
       mountPath: /kaniko/.docker/
     tty: true
+  - name: bitnami
+    image: bitnami/kubectl
+    command:
+    - cat
+    volumeMounts:
+    - name: kube-config
+      mountPath: /.kube/
+    tty: true
   volumes:
   - name: docker-config
     configMap:
       name: docker-config
   - name: kube-config
-    configMap:
-      name: kube-config
+    secret:
+      secretName: kube-config
 """
 		}
 	}
 	stages {
 		stage( 'Build DotNet Core Source from Github and Deploy to the Cluster ' ) {
-//			steps {
+			steps {
 //				container( name: 'kaniko', shell: '/busybox/sh' ) {
 //					sh """
 //					/kaniko/executor --dockerfile=Dockerfile --context=git://github.com/burhanuguz/dotnet-core-hello-world --destination=burhanuguz/dotnet-core-hello-world
 //					"""
 //				}
-//			}
-			sh """
-			curl -LO "https://storage.googleapis.com/kubernetes-release/release/\$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
-			chmod +x kubectl
-			PATH=\$PATH:\$pwd
-			kubectl apply -f example.yaml
-			"""
+				container( 'bitnami' ) {
+					writeFile file: "deploy.yaml", text: """
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotnet-core-helloworld
+  namespace: dotnet-core
+spec:
+  selector:
+    matchLabels:
+    run: dotnet
+  replicas: 1
+  template:
+    metadata:
+    labels:
+      run: dotnet
+    spec:
+    containers:
+    - name: dotnet
+      image: burhanuguz/dotnet-core-hello-world:latest
+      ports:
+        - containerPort: 11130
+      resources:
+        limits:
+          cpu: 500m
+        requests:
+          cpu: 1m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dotnet-core-helloworld
+  namespace: dotnet-core
+labels:
+  run: dotnet
+spec:
+  ports:
+  - port: 80
+    targetPort: 11130
+    nodePort: 30000
+  selector:
+    run: dotnet
+  type: NodePort
+"""
+					sh """#!/bin/bash
+					kubectl apply -f deploy.yaml
+					"""
+				}
+			}
 		}
 	}
 }
