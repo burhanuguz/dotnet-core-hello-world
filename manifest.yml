@@ -1,6 +1,0 @@
----
-applications:
-  - name: dotnet_core_hello_world
-    random-route: true
-    env:
-      CACHE_NUGET_PACKAGES: false
