@@ -6,7 +6,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-    run: dotnet
+      run: dotnet
   replicas: 1
   template:
     metadata:
