@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Clone Jenkins contents that is specifically made for this lab and pull jenkins image on node01
-ssh root@node01 'git clone https://520112e60d2349186a9fb497fcbbc3792d1d5988@github.com/burhanuguz/jenkins-private /tmp/jenkins-private ; \
-                 chmod -R ugo+rwx /tmp/jenkins-private/jenkins_home ; \
+ssh root@node01 'git clone https://github.com/burhanuguz/jenkins-custom /tmp/jenkins-custom ; \
+                 chmod -R ugo+rwx /tmp/jenkins-custom/jenkins_home ; \
                  docker pull jenkins/jenkins'
 
 # Deploy metrics server with insecure flag to make it work on this ephemeral environment
