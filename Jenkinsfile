@@ -44,10 +44,9 @@ spec:
 //					"""
 //				}
 				container( name: 'bitnami', shell: '/bin/bash' ) {
-					sh """
+					sh '''#!/bin/bash
 					ls -la
-					kubectl apply -f deploy.yaml
-					"""
+					'''
 				}
 			}
 		}
