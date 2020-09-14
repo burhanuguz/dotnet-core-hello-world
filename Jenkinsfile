@@ -24,10 +24,6 @@ spec:
     configMap:
       name: docker-config
 """
-		}
-	}
-	agent {
-		kubernetes {
 			label 'kubectl-deployer'
 			yaml """
 apiVersion: v1
