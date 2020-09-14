@@ -17,14 +17,21 @@ spec:
     - name: docker-config
       mountPath: /kaniko/.docker/
     tty: true
-  - name: bitnami
-    image: bitnami/kubectl:latest
-    command:
-    - cat
-    volumeMounts:
-    - name: kube-config
-      mountPath: /.kube/
+    image: "jenkins/inbound-agent:4.3-4"
+    name: "jnlp"
     tty: true
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "256Mi"
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace-volume"
+      readOnly: false
+    - name: kube-config
+      mountPath: /home/jenkins/agent/.kube/
+      name: "workspace-volume"
+      readOnly: false
   volumes:
   - name: docker-config
     configMap:
@@ -32,6 +39,9 @@ spec:
   - name: kube-config
     configMap:
       name: kube-config
+  - emptyDir:
+      medium: ""
+    name: "workspace-volume"
 """
 		}
 	}
@@ -43,11 +53,13 @@ spec:
 //					/kaniko/executor --dockerfile=Dockerfile --context=git://github.com/burhanuguz/dotnet-core-hello-world --destination=burhanuguz/dotnet-core-hello-world
 //					"""
 //				}
-				container( 'bitnami' ) {
-					withEnv([/opt/bitnami/kubectl/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin])
-					sh 'kubectl apply -f denem.yaml'
-				}
 			}
+			sh """
+			curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+			chmod +x kubectl
+			PATH=$PATH:$pwd
+			kubectl apply -f example.yaml
+			"""
 		}
 	}
 }
