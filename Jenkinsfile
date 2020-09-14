@@ -43,7 +43,7 @@ spec:
 //					/kaniko/executor --dockerfile=Dockerfile --context=git://github.com/burhanuguz/dotnet-core-hello-world --destination=burhanuguz/dotnet-core-hello-world
 //					"""
 //				}
-				container( 'bitnami' ) {
+				container( name: 'bitnami', shell: '/bin/bash' ) {
 					sh """
 					ls -la
 					kubectl apply -f deploy.yaml
