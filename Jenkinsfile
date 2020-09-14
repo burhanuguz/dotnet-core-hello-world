@@ -1,4 +1,8 @@
-podTemplate(yaml: """
+pipeline {
+  agent {
+    kubernetes {
+      label 'kaniko-builder'
+      yaml """
 apiVersion: v1
 kind: Pod
 metadata:
@@ -22,7 +26,7 @@ spec:
 """
 )
 {
-    node(POD_LABEL) {
+	stages {
 		stage('Build DotNet Core Source from Github') {
 			container(name: 'kaniko', shell: '/busybox/sh') {
 			    sh """
