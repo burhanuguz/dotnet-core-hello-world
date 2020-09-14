@@ -7,6 +7,7 @@ USER 1001
 RUN /usr/libexec/s2i/assemble
 CMD /usr/libexec/s2i/run
 
+
 # Build runtime image
 FROM registry.redhat.io/rhel8/dotnet-21-runtime
 USER 0
