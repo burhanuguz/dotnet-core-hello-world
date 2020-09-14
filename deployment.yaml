@@ -13,29 +13,29 @@ spec:
     labels:
       run: dotnet
     spec:
-    containers:
-    - name: dotnet
-      image: burhanuguz/dotnet-core-hello-world:latest
-      ports:
-        - containerPort: 11130
-      resources:
-        limits:
-          cpu: 500m
-        requests:
-          cpu: 1m
+      containers:
+        - name: dotnet
+          image: burhanuguz/dotnet-core-hello-world:latest
+          ports:
+            - containerPort: 11130
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 1m
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: dotnet-core-helloworld
   namespace: dotnet-core
-labels:
-  run: dotnet
+  labels:
+    run: dotnet
 spec:
+  selector:
+    run: dotnet
   ports:
   - port: 80
     targetPort: 11130
     nodePort: 30000
-  selector:
-    run: dotnet
   type: NodePort
