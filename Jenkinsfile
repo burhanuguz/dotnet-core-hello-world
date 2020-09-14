@@ -18,7 +18,7 @@ spec:
     - name: docker-config
       mountPath: /kaniko/.docker/
     tty: true
-  - name: kaniko
+  - name: bitnami
     image: bitnami/kubectl
     command:
     - cat
@@ -45,7 +45,7 @@ spec:
 					/kaniko/executor --dockerfile=Dockerfile --context=git://github.com/burhanuguz/dotnet-core-hello-world --destination=burhanuguz/dotnet-core-hello-world
 					"""
 				}
-                writeFile file: "deploy.yaml", text: """
+				writeFile file: "deploy.yaml", text: """
 					apiVersion: apps/v1
 					kind: Deployment
 					metadata:
