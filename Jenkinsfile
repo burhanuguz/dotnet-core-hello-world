@@ -12,7 +12,7 @@ spec:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug
     command:
-    - ls -la 
+    - ls -la
     volumeMounts:
     - name: docker-config
       mountPath: /kaniko/.docker/
@@ -44,6 +44,7 @@ spec:
 //					"""
 //				}
 				container( 'bitnami' ) {
+					sh 'ls -la'
 				}
 			}
 		}
