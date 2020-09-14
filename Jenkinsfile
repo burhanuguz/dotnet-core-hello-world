@@ -17,21 +17,6 @@ spec:
     - name: docker-config
       mountPath: /kaniko/.docker/
     tty: true
-    image: "jenkins/inbound-agent:4.3-4"
-    name: "jnlp"
-    tty: true
-    resources:
-      requests:
-        cpu: "100m"
-        memory: "256Mi"
-    volumeMounts:
-    - mountPath: "/home/jenkins/agent"
-      name: "workspace-volume"
-      readOnly: false
-    - name: kube-config
-      mountPath: /home/jenkins/agent/.kube/
-      name: "workspace-volume"
-      readOnly: false
   volumes:
   - name: docker-config
     configMap:
@@ -39,9 +24,6 @@ spec:
   - name: kube-config
     configMap:
       name: kube-config
-  - emptyDir:
-      medium: ""
-    name: "workspace-volume"
 """
 		}
 	}
