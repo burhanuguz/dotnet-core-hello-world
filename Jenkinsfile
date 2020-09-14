@@ -49,44 +49,44 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-name: dotnet-core-helloworld
-namespace: dotnet-core
+  name: dotnet-core-helloworld
+  namespace: dotnet-core
 spec:
-selector:
-	matchLabels:
-	run: dotnet
-replicas: 1
-template:
-	metadata:
-	labels:
-		run: dotnet
-	spec:
-	containers:
-	- name: dotnet
-		image: burhanuguz/dotnet-core-hello-world:latest
-		ports:
-		- containerPort: 11130
-		resources:
-		limits:
-			cpu: 500m
-		requests:
-			cpu: 1m
+  selector:
+    matchLabels:
+    run: dotnet
+  replicas: 1
+  template:
+    metadata:
+    labels:
+      run: dotnet
+    spec:
+    containers:
+    - name: dotnet
+      image: burhanuguz/dotnet-core-hello-world:latest
+      ports:
+        - containerPort: 11130
+      resources:
+        limits:
+          cpu: 500m
+        requests:
+          cpu: 1m
 ---
 apiVersion: v1
 kind: Service
 metadata:
-name: dotnet-core-helloworld
-namespace: dotnet-core
+  name: dotnet-core-helloworld
+  namespace: dotnet-core
 labels:
-	run: dotnet
+  run: dotnet
 spec:
-ports:
-- port: 80
-	targetPort: 11130
-	nodePort: 30000
-selector:
-	run: dotnet
-type: NodePort
+  ports:
+  - port: 80
+    targetPort: 11130
+    nodePort: 30000
+  selector:
+    run: dotnet
+  type: NodePort
 """
 				container( 'bitnami' ) {
 					sh """
