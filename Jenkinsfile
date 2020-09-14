@@ -1,7 +1,7 @@
 pipeline {
 	agent {
 		kubernetes {
-			label 'kaniko-builder'
+			label 'builder-deployer'
 			yaml """
 apiVersion: v1
 kind: Pod
@@ -18,21 +18,6 @@ spec:
     - name: docker-config
       mountPath: /kaniko/.docker/
     tty: true
-  restartPolicy: Never
-  volumes:
-  - name: docker-config
-    configMap:
-      name: docker-config
-"""
-			label 'kubectl-deployer'
-			yaml """
-apiVersion: v1
-kind: Pod
-metadata:
-  name: kubectl
-  namespace: build
-spec:
-  containers:
   - name: kaniko
     image: bitnami/kubectl
     command:
@@ -43,6 +28,9 @@ spec:
     tty: true
   restartPolicy: Never
   volumes:
+  - name: docker-config
+    configMap:
+      name: docker-config
   - name: kube-config
     secret:
       secretName: kube-config
@@ -57,10 +45,6 @@ spec:
 					/kaniko/executor --dockerfile=Dockerfile --context=git://github.com/burhanuguz/dotnet-core-hello-world --destination=burhanuguz/dotnet-core-hello-world
 					"""
 				}
-			}
-		}
-		stage( 'Deploy or rollout' ) {
-			steps {
                 writeFile file: "deploy.yaml", text: """
 					apiVersion: apps/v1
 					kind: Deployment
