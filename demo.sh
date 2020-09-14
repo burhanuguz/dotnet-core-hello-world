@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Clone Jenkins contents that is specifically made for this lab and pull jenkins image on node01
-ssh root@node01 'cd /tmp && git clone https://31e3a8a402c6d5d21f86748c1b80ca49bf346730@github.com/burhanuguz/jenkins-private && chmod -R ugo+rwx /tmp/jenkins-private/jenkins_home && docker pull jenkins/jenkins'
+ssh root@node01 'cd /tmp ; git clone https://31e3a8a402c6d5d21f86748c1b80ca49bf346730@github.com/burhanuguz/jenkins-private ; chmod -R ugo+rwx /tmp/jenkins-private/jenkins_home ; docker pull jenkins/jenkins'
 
 # Deploy metrics server with insecure flag to make it work on this ephemeral environment
 wget https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.3.7/components.yaml && \
