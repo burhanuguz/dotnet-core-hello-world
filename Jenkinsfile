@@ -44,7 +44,8 @@ spec:
 //					"""
 //				}
 				container( 'bitnami' ) {
-					kubectl apply -f denem.yaml
+					withEnv([/opt/bitnami/kubectl/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin])
+					sh 'kubectl apply -f denem.yaml'
 				}
 			}
 		}
