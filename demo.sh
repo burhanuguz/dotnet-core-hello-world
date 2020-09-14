@@ -24,4 +24,4 @@ kubectl apply -f https://raw.githubusercontent.com/burhanuguz/dotnet-core-hello-
 # Create Deployment which will be updated throughout builds
 kubectl apply -f https://raw.githubusercontent.com/burhanuguz/dotnet-core-hello-world/master/deployments/deployment.yaml
 
-kubectl wait --for=condition=ready pod -n jenkins $(kubectl get pods --no-headers -o custom-columns=":metadata.name" -n jenkins)
+kubectl autoscale deployment -n dotnet-core dotnet-core-helloworld --cpu-percent=50 --min=1 --max=3
