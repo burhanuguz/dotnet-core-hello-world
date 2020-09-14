@@ -1,7 +1,6 @@
 pipeline {
 	agent {
 		kubernetes {
-			label 'builder-deployer'
 			yaml """
 apiVersion: v1
 kind: Pod
@@ -10,30 +9,29 @@ metadata:
   namespace: build
 spec:
   containers:
-    - name: kaniko
-      image: gcr.io/kaniko-project/executor:debug
-      command:
-      - cat
-      volumeMounts:
-      - name: docker-config
-        mountPath: /kaniko/.docker/
-      tty: true
-    - name: bitnami
-      image: bitnami/kubectl
-      command:
-      - cat
-      volumeMounts:
-      - name: kube-config
-        mountPath: /.kube/
-      tty: true
-  restartPolicy: Never
-  volumes:
+  - name: kaniko
+    image: gcr.io/kaniko-project/executor:debug
+    command:
+    - cat
+    volumeMounts:
     - name: docker-config
-      configMap:
-        name: docker-config
+      mountPath: /kaniko/.docker/
+    tty: true
+  - name: bitnami
+    image: bitnami/kubectl
+    command:
+    - cat
+    volumeMounts:
     - name: kube-config
-      secret:
-        secretName: kube-config
+      mountPath: /.kube/
+    tty: true
+  volumes:
+  - name: docker-config
+    configMap:
+      name: docker-config
+  - name: kube-config
+    secret:
+      secretName: kube-config
 """
 		}
 	}
@@ -45,7 +43,8 @@ spec:
 					/kaniko/executor --dockerfile=Dockerfile --context=git://github.com/burhanuguz/dotnet-core-hello-world --destination=burhanuguz/dotnet-core-hello-world
 					"""
 				}
-				writeFile file: "deploy.yaml", text: """
+				container( 'bitnami' ) {
+					writeFile file: "deploy.yaml", text: """
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -88,7 +87,6 @@ spec:
     run: dotnet
   type: NodePort
 """
-				container( 'bitnami' ) {
 					sh """
 					kubectl apply -f deploy.yaml
 					"""
