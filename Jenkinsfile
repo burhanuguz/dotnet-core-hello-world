@@ -20,7 +20,7 @@ spec:
   - name: bitnami
     image: bitnami/kubectl:latest
     command:
-    - ls -la
+    - ls
     volumeMounts:
     - name: kube-config
       mountPath: /.kube/
