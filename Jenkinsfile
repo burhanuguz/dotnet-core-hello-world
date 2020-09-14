@@ -6,7 +6,7 @@ pipeline {
 apiVersion: v1
 kind: Pod
 metadata:
-  name: kaniko
+  name: builder-deployer
   namespace: build
 spec:
   containers:
