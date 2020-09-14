@@ -1,3 +1,4 @@
+# Build source code
 FROM registry.redhat.io/rhel8/dotnet-21 AS build-env
 USER 0
 COPY ./* ./
