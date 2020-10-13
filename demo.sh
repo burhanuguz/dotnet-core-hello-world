@@ -1,5 +1,6 @@
 #!/bin/bash
 
+launch.sh
 # Clone Jenkins contents that is specifically made for this lab and pull jenkins image on node01
 ssh root@node01 'git clone https://github.com/burhanuguz/jenkins-custom /tmp/jenkins-custom ; \
                  chmod -R ugo+rwx /tmp/jenkins-custom/jenkins_home ; \
